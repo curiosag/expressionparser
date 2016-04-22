@@ -35,8 +35,8 @@ object tracingEvaluator extends ExprEvaluator[String] {
   }
 
   override def evalFunc(name: Id, params: List[Token]): EvalResult[String] = {
-    val ret = "passFilter: %s params: %s".format(name.token, params.foldLeft("")((x, y) => x + " " + y.token))
-    trace("evalPassFilter: " + ret)
+    val ret = "function: %s params: %s".format(name.token, params.foldLeft("")((x, y) => x + " " + y.token))
+    trace(ret)
     EvalOk(ret)
   }
 }
