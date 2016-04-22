@@ -5,7 +5,7 @@ The ordinary expression parser using parser combinators. The Scala black magic l
 * [Tracing](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/ExprEvaluator.scala) and a simple string representation of the parse result
 * Abstract syntax tree creation [(AstEvaluator)](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/AstEvaluator.scala)
 
-There's a converter to generate a [DOT graph description](http://www.graphviz.org/Documentation.php) file from the AST for visualization [(Ast2Dot)](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/Ast2Dot.scala)
+There's a converter to generate a [DOT graph description](http://www.graphviz.org/Documentation.php) from the AST for visualization [(Ast2Dot)](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/Ast2Dot.scala)
 
 By the way in another place there's an implementation for the evaluator doing actual [boolean evaluation](https://github.com/curiosag/AdScraperExpressionFilter/blob/master/src/org/cg/adscraper/exprFilter/ExprContextAdScraper.scala) on raw data in a web scraper environment. It deals with the possibility that evaluation may fail at any moment due to missing or flawed data and shows a pretty paranoid relationship to the parser as well.
 
