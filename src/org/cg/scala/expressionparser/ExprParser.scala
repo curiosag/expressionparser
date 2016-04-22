@@ -14,7 +14,6 @@ case class Op(override val token: String) extends Token(token)
 class ExprParser[T](e: ExprEvaluator[T]) extends StandardTokenParsers {
   private val cFalse = "false"
   private val cTrue = "true"
-  private val cPasses = "passes"
   private val cEq = "=="
   private val cLt = "<"
   private val cGt = ">"
