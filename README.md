@@ -1,10 +1,13 @@
 # ExpressionParser
 
-The odd expression parser using parser combinators using a generic evaluator. 3 evaluators are implementated for
+The ordinary expression parser using parser combinators coming with a generic evaluator. 3 evaluators are implementated for
 
-* [Tracing]() and simple string representation
-* Abstract syntax tree [AstEvaluator]()
-* [DOT graph description](http://www.graphviz.org/Documentation.php) file for visualization
+* [(Tracing)](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/ExprEvaluator.scala) and simple string representation
+* Abstract syntax tree [(AstEvaluator)](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/AstEvaluator.scala)
+
+There's a converter to generate a [DOT graph description](http://www.graphviz.org/Documentation.php) file from the AST for visualization [(Ast2Dot)](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/Ast2Dot.scala)
+
+By the way in another place there's an implementation doing actual [boolean evaluation](https://github.com/curiosag/AdScraperExpressionFilter/blob/master/src/org/cg/adscraper/exprFilter/ExprContextAdScraper.scala) on raw data in a web scraper environment. It deals with the possibility that evaluation may fail at any moment due to missing or flawed data.
 
 That's covered:
     
