@@ -23,8 +23,7 @@ class TokenLabeller(val node: AstNode) {
         
   }
 
-  private def getMax(node: Labelled): Int =
-    {
+  private def getMax(node: Labelled): Int = {
       node match {
         case LTerminal(label, _) => label
         case LNonTerminal(_, _, children) => getMax(children.last)
@@ -43,10 +42,8 @@ class TokenLabeller(val node: AstNode) {
 
   def get(): String = getLables_(label(-1, node))
 
-  private def getLables_(node: Labelled): String =
-    {
-      val c = node match 
-      {
+  private def getLables_(node: Labelled): String = {
+      val c = node match {
         case LNonTerminal(_, _, children) => "(" + children.map(x => getLables_(x)).mkString(", ") + ")"
         case _ => ""
       }
@@ -56,7 +53,6 @@ class TokenLabeller(val node: AstNode) {
 
 }
 
-object TokenLabeller 
-{
+object TokenLabeller {
   def apply(node: AstNode) = new TokenLabeller(node)
 }

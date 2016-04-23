@@ -51,27 +51,27 @@ class ExprParser[T](e: ExprEvaluator[T]) extends StandardTokenParsers {
   
   private def binOp: Parser[String] = cEq | cLt | cGt | cLe | cGe
   
-  private def booleanExpr: Parser[EvalResult[T]] = bNotFactor ~ rep((cOr | cAnd) ~ bNotFactor) ^^ {
+  private def booleanExpr: Parser[T] = bNotFactor ~ rep((cOr | cAnd) ~ bNotFactor) ^^ {
     case f ~ flist => flist.foldLeft(f)((current, next) =>
       next match { case (op ~ rightResult) => e.evalBinOpBoolean(current, Op(op), rightResult) })
   }
 
-  private def bNotFactor: Parser[EvalResult[T]] = opt(cNot) ~ bFactor ^^ {
+  private def bNotFactor: Parser[T] = opt(cNot) ~ bFactor ^^ {
     case Some(not) ~ f => e.evalUnOp(f, Op(not))
     case None ~ f => f
   }
 
-  private def bFactor: Parser[EvalResult[T]] = bFunction | bConst | "(" ~> booleanExpr <~ ")"
+  private def bFactor: Parser[T] = bFunction | bConst | "(" ~> booleanExpr <~ ")"
 
-  private def bConst: Parser[EvalResult[T]] = (cFalse | cTrue) ^^ { case c => e.evalConst(Id(c)) }
+  private def bConst: Parser[T] = (cFalse | cTrue) ^^ { case c => e.evalConst(Id(c)) }
 
-  private def numBinOp: Parser[EvalResult[T]] = term ~ binOp ~ term ^^
+  private def numBinOp: Parser[T] = term ~ binOp ~ term ^^
     { case (v1 ~ op ~ v2) => e.evalRelOp(v1, Op(op), v2) }
 
-  private def numInterval: Parser[EvalResult[T]] = term ~ binOp ~ term ~ binOp ~ term ^^
+  private def numInterval: Parser[T] = term ~ binOp ~ term ~ binOp ~ term ^^
     { case (v1 ~ op1 ~ v2 ~ op2 ~ v3) => e.evalBinOpBoolean(e.evalRelOp(v1, Op(op1), v2), Op(cAnd), e.evalRelOp(v2, Op(op2), v3)) }
 
-  private def bFunctionCall: Parser[EvalResult[T]] = id ~ "(" ~ paramList ~ ")" ^^ 
+  private def bFunctionCall: Parser[T] = id ~ "(" ~ paramList ~ ")" ^^ 
   { case (n ~  "(" ~ p ~ ")") =>  e.evalFunc(n, p) }
 
   private def paramList: Parser[List[Token]] = opt(id ~ rep("," ~> id)) ^^
@@ -80,7 +80,7 @@ class ExprParser[T](e: ExprEvaluator[T]) extends StandardTokenParsers {
       case None => List()
     }
   
-  private def bFunction: Parser[EvalResult[T]] = numInterval | numBinOp | bFunctionCall
+  private def bFunction: Parser[T] = numInterval | numBinOp | bFunctionCall
   
   private def term: Parser[Token] = id | num
   private def id: Parser[Id] = ident ^^ { case x => Id(x) }
@@ -88,9 +88,6 @@ class ExprParser[T](e: ExprEvaluator[T]) extends StandardTokenParsers {
   
   def parse(src: String) = {
     val tokens = new lexical.Scanner(src)
-    phrase(booleanExpr)(tokens) match {
-      case Success(result, _) => result
-      case x => EvalFail(x.toString())
-    }
+    phrase(booleanExpr)(tokens)
   }
 }
