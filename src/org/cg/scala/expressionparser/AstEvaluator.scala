@@ -7,15 +7,15 @@ case class AstNonTerminal(symbol: Token, children: List[AstNode]) extends AstNod
 case class AstTerminal(symbol: Token) extends AstNode
 
 object AstEvaluator extends ExprEvaluator[AstNode] {
-  def trace(v: String) = { System.out.println(v) }
   
+  def trace(v: String) = { System.out.println(v) }
   
   override def evalConst(const: Id): AstNode = {
     AstTerminal(const)
   }
 
   override def evalUnOp(arg: AstNode, op: Op): AstNode = {
-    AstNonTerminal(op, List(evalSub(arg)))
+    AstNonTerminal(op, List(arg))
   }
 
   override def evalRelOp(val1: Token, op: Op, val2: Token): AstNode = {
@@ -23,13 +23,8 @@ object AstEvaluator extends ExprEvaluator[AstNode] {
   }
 
   override def evalBinOpBoolean(arg1: AstNode, op: Op, arg2: AstNode): AstNode = {
-    AstNonTerminal(op, List(evalSub(arg1), evalSub(arg2)))
+    AstNonTerminal(op, List(arg1, arg2))
   }
-
-  private def evalSub(arg1: AstNode): AstNode =
-    {
-      arg1
-    }
 
   override def evalFunc(name: Id, params: List[Token]): AstNode = {
     AstStructuralNonTerminal("function call",
@@ -46,10 +41,5 @@ object AstEvaluator extends ExprEvaluator[AstNode] {
          
       } 
     }
-  }
-  
-
-  
-  
-  
+  }  
 }
