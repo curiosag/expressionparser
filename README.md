@@ -1,6 +1,6 @@
 # ExpressionParser
 
-The ordinary expression parser using parser combinators. The Scala black magic level is trivial, but it uses a generic evaluator class. Three evaluators are implementated for
+Parses boolean expressions and comparisons on numbers using a generic evaluator. Otherwise the Scala black magic level is trivial, the ordinary application of parser combinators. 3 evaluators are implemented for
 
 * [Tracing](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/ExprEvaluator.scala) and a simple string representation of the parse result
 * Abstract syntax tree creation [(AstEvaluator)](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/AstEvaluator.scala)
