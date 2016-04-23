@@ -10,34 +10,31 @@ object AstEvaluator extends ExprEvaluator[AstNode] {
   def trace(v: String) = { System.out.println(v) }
   
   
-  override def evalConst(const: Id): EvalResult[AstNode] = {
-    EvalOk(AstTerminal(const))
+  override def evalConst(const: Id): AstNode = {
+    AstTerminal(const)
   }
 
-  override def evalUnOp(arg: EvalResult[AstNode], op: Op): EvalResult[AstNode] = {
-    EvalOk(AstNonTerminal(op, List(evalSub(arg))))
+  override def evalUnOp(arg: AstNode, op: Op): AstNode = {
+    AstNonTerminal(op, List(evalSub(arg)))
   }
 
-  override def evalRelOp(val1: Token, op: Op, val2: Token): EvalResult[AstNode] = {
-    EvalOk(AstNonTerminal(op, List(AstTerminal(val1), AstTerminal(val2))))
+  override def evalRelOp(val1: Token, op: Op, val2: Token): AstNode = {
+    AstNonTerminal(op, List(AstTerminal(val1), AstTerminal(val2)))
   }
 
-  override def evalBinOpBoolean(arg1: EvalResult[AstNode], op: Op, arg2: EvalResult[AstNode]): EvalResult[AstNode] = {
-    EvalOk(AstNonTerminal(op, List(evalSub(arg1), evalSub(arg2))))
+  override def evalBinOpBoolean(arg1: AstNode, op: Op, arg2: AstNode): AstNode = {
+    AstNonTerminal(op, List(evalSub(arg1), evalSub(arg2)))
   }
 
-  private def evalSub(arg1: EvalResult[AstNode]): AstNode =
+  private def evalSub(arg1: AstNode): AstNode =
     {
-      arg1 match {
-        case EvalOk(v) => v
-        case EvalFail(_) => throw new RuntimeException // shouldn't happen
-      }
+      arg1
     }
 
-  override def evalFunc(name: Id, params: List[Token]): EvalResult[AstNode] = {
-    EvalOk(AstStructuralNonTerminal("function call",
+  override def evalFunc(name: Id, params: List[Token]): AstNode = {
+    AstStructuralNonTerminal("function call",
       List(AstStructuralNonTerminal("function name", List(AstTerminal(name))),
-        AstStructuralNonTerminal("parameter list", params.map((x) => AstTerminal(x))))))
+        AstStructuralNonTerminal("parameter list", params.map((x) => AstTerminal(x)))))
   }
 
   def print(node: AstNode): String = {

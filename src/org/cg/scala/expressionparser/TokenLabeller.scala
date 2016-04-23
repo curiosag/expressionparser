@@ -20,6 +20,7 @@ class TokenLabeller(val node: AstNode) {
       case AstNonTerminal(t, children) => new LNonTerminal(curr, t, iter(curr, children))
       case AstStructuralNonTerminal(name, children) => label(max, AstNonTerminal(Id(name), children))
     }
+        
   }
 
   private def getMax(node: Labelled): Int =
