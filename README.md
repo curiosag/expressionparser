@@ -4,7 +4,7 @@ The ordinary expression parser using parser combinators. The Scala black magic l
 
 * [Tracing](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/ExprEvaluator.scala) and a simple string representation of the parse result
 * Abstract syntax tree creation [(AstEvaluator)](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/AstEvaluator.scala)
-* [Boolean evaluation](https://github.com/curiosag/expressionparser/blob/master/src/orag/cg/scala/expressionparser/BooleanEvaluator.scala) taking an evaluation environment as constructor parameter which interprets numbers, variable values and function results. It deals with the possibility that evaluation may fail anywhere due to missing or flawed data. It shows a pretty paranoid relationship to the parser as well.
+* [Boolean evaluation](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/BooleanEvaluator.scala) taking an evaluation environment as constructor parameter which interprets numbers, variable values and function results. It deals with the possibility that evaluation may fail anywhere due to missing or flawed data. It shows a pretty paranoid relationship to the parser as well.
 
 There's a converter to generate a [DOT graph description](http://www.graphviz.org/Documentation.php) from the AST for visualization [(Ast2Dot)](https://github.com/curiosag/expressionparser/blob/master/src/org/cg/scala/expressionparser/Ast2Dot.scala). Here's [an example](https://raw.githubusercontent.com/curiosag/expressionparser/master/expression.gif).
 
