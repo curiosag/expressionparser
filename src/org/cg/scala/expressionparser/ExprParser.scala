@@ -11,6 +11,10 @@ case class Id(override val token: String) extends Token(token)
 case class Num(override val token: String) extends Token(token)
 case class Op(override val token: String) extends Token(token)
 
+abstract class ExprParseResult[+T]
+case class ExprOk[T](result: T) extends ExprParseResult[T]
+case class ExprErr(message: String) extends ExprParseResult[Nothing]
+
 class ExprParser[T](e: ExprEvaluator[T]) extends StandardTokenParsers {
   private val cFalse = "false"
   private val cTrue = "true"
@@ -88,6 +92,9 @@ class ExprParser[T](e: ExprEvaluator[T]) extends StandardTokenParsers {
   
   def parse(src: String) = {
     val tokens = new lexical.Scanner(src)
-    phrase(booleanExpr)(tokens)
+    phrase(booleanExpr)(tokens) match {
+      case Success(x, _) => ExprOk(x)
+      case x => ExprErr(x.toString())
+    }
   }
 }
